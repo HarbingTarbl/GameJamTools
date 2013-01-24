@@ -120,8 +120,9 @@
       <Project>{8c9fe739-00f8-42e1-b30a-3a0b2dfd5563}</Project>
       <Name>Jammy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JammyTestsContent\JammyTestsContent.contentproj">
-      <Name>JammyTestsContent</Name>
+    <ProjectReference Include="HarbingSampleContent\HarbingSampleContent.contentproj">
+      <Project>{DEECE4B3-263F-4F0A-AA0B-9B36A640AA74}</Project>
+      <Name>HarbingSampleContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>
