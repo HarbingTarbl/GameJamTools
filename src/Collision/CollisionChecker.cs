@@ -37,28 +37,27 @@ namespace Jammy.Collision
 			var inside = false;
 			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; i++)
 			{
-				if (poly.Vertices[i].Y < point.Y
-				    && poly.Vertices[j].Y < point.Y)
+				var x1 = poly.Vertices[i].X + poly.Location.X;
+				var x2 = poly.Vertices[j].X + poly.Location.X;
+				var y1 = poly.Vertices[i].Y + poly.Location.Y;
+				var y2 = poly.Vertices[j].Y + poly.Location.Y;
+
+				if (y1 < point.Y
+				    && y2 < point.Y)
 				{
 					continue;
 				}
 
-				if (poly.Vertices[i].Y >= point.Y
-				    && poly.Vertices[j].Y >= point.Y)
+				if (y1 >= point.Y
+				    && y2 >= point.Y)
 				{
 					continue;
 				}
 
-				var deno = (poly.Vertices[i].X - poly.Vertices[j].X)*point.Y - (poly.Vertices[i].Y - poly.Vertices[j].Y)*point.Y;
+				var deno = (x1 - x2)*point.Y - (y1 - y2)*point.Y;
 				if (deno > 0f)
 					inside = !inside;
-				//if (((poly.Vertices[i].Y > point.Y) != (poly.Vertices[j].Y > point.Y))
-				//	&& (point.X
-				//		< (poly.Vertices[j].X - poly.Vertices[i].X)*(point.Y - poly.Vertices[i].Y)
-				//		/(poly.Vertices[j].Y - poly.Vertices[i].Y) + poly.Vertices[i].X))
-				//{
-				//	inside = !inside;
-				//}
+
 				j = i;
 			}
 			return inside;
