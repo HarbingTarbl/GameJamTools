@@ -31,8 +31,23 @@ namespace Jammy.Collision
 		{
 			return true;
 		}
-
 		
+		public static bool PointInPoly(Vector2 point, Polygon poly)
+		{
+			var inside = false;
+			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; i++)
+			{
+				if (((poly.Vertices[i].Y > point.Y) != (poly.Vertices[j].Y > point.Y))
+				    && (point.X
+				        < (poly.Vertices[j].X - poly.Vertices[i].X)*(point.Y - poly.Vertices[i].Y)
+				        /(poly.Vertices[j].Y - poly.Vertices[i].Y) + poly.Vertices[i].X))
+				{
+					inside = !inside;
+				}
+				j = i;
+			}
+			return inside;
+		}
 
 		public static bool PointToRect(Vector2 point, Rectangle rect)
 		{
