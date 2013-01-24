@@ -12,7 +12,7 @@ Features
  [/] Stack based state machine
  [/] Transitions built into state machine
  [ ] Parallax layers
- [ ] Rendering of debug collision data
+ [X] Rendering of debug collision data
 
  [/] denotes things that have been worked on, but are not finished or tested.
  [X] denotes things that are complete, or mostly complete and are usable.
