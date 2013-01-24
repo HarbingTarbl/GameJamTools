@@ -96,7 +96,7 @@
     <Compile Include="Cameras\CameraCoop.cs" />
     <Compile Include="Collision\CollisionChecker.cs" />
     <Compile Include="Collision\CollisionRenderer.cs" />
-    <Compile Include="Collision\PolygonCollision.cs" />
+    <Compile Include="Collision\Polygon.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Helpers\GeomHelpers.cs" />
     <Compile Include="Helpers\MiscHelpers.cs" />

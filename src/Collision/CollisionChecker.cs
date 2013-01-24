@@ -32,18 +32,33 @@ namespace Jammy.Collision
 			return true;
 		}
 		
-		public static bool PointInPoly(Vector2 point, Polygon poly)
+		public static bool PointToPoly(Vector2 point, Polygon poly)
 		{
 			var inside = false;
 			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; i++)
 			{
-				if (((poly.Vertices[i].Y > point.Y) != (poly.Vertices[j].Y > point.Y))
-				    && (point.X
-				        < (poly.Vertices[j].X - poly.Vertices[i].X)*(point.Y - poly.Vertices[i].Y)
-				        /(poly.Vertices[j].Y - poly.Vertices[i].Y) + poly.Vertices[i].X))
+				if (poly.Vertices[i].Y < point.Y
+				    && poly.Vertices[j].Y < point.Y)
 				{
-					inside = !inside;
+					continue;
 				}
+
+				if (poly.Vertices[i].Y >= point.Y
+				    && poly.Vertices[j].Y >= point.Y)
+				{
+					continue;
+				}
+
+				var deno = (poly.Vertices[i].X - poly.Vertices[j].X)*point.Y - (poly.Vertices[i].Y - poly.Vertices[j].Y)*point.Y;
+				if (deno > 0f)
+					inside = !inside;
+				//if (((poly.Vertices[i].Y > point.Y) != (poly.Vertices[j].Y > point.Y))
+				//	&& (point.X
+				//		< (poly.Vertices[j].X - poly.Vertices[i].X)*(point.Y - poly.Vertices[i].Y)
+				//		/(poly.Vertices[j].Y - poly.Vertices[i].Y) + poly.Vertices[i].X))
+				//{
+				//	inside = !inside;
+				//}
 				j = i;
 			}
 			return inside;

@@ -82,6 +82,8 @@ namespace JammyTests
 			collisionRender = new CollisionRenderer(graphics.GraphicsDevice);
 			IsMouseVisible = true;
 
+			//polys[0].Rotation = MathHelper.PiOver4;
+
 			base.Initialize();
 		}
 
@@ -135,6 +137,13 @@ namespace JammyTests
 				{
 					locations[4].X += deltaX;
 					locations[4].Y += deltaY;
+				}
+				else
+				if (CollisionChecker.PointToPoly(new Vector2(mouseState.X, mouseState.Y), polys[0]))
+				{
+					polys[0].Location.X += deltaX;
+					polys[0].Location.Y += deltaY;
+					polys[0].RotateRelativeAboutPoint(MathHelper.PiOver4/8f, polys[0].RelativeCenter);
 				}
 
 			}
@@ -208,7 +217,7 @@ namespace JammyTests
 
 			for (var i = 0; i < polys.Length; i++)
 			{
-				collisionRender.DrawPolygon(locations[i + 2], polys[i]);
+				collisionRender.DrawPolygon(polys[i]);
 			}
 
 			for (var i = 0; i < circles.Length; i++)
