@@ -163,6 +163,13 @@ namespace JammyTests
 					locations[5].Y += deltaY;
 
 				}
+				else
+				if (CollisionChecker.PointToPoly(new Vector2(mouseState.X, mouseState.Y), polys[1]))
+				{
+					polys[1].Location.X += deltaX;
+					polys[1].Location.Y += deltaY;
+					polys[1].RotateRelativeAboutPoint(MathHelper.PiOver4 / 8f, polys[1].RelativeCenter);
+				}
 			}
 
 			rectangles[0].X = (int)locations[0].X;
