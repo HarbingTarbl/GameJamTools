@@ -9,6 +9,8 @@ namespace Jammy.Collision
 	public class Polygon
 	{
 		public List<Vector2> Vertices;
+		public readonly Vector2 Center;
+
 
 		public Polygon()
 		{
@@ -18,6 +20,12 @@ namespace Jammy.Collision
 		public Polygon(params Vector2[] verts)
 		{
 			Vertices = new List<Vector2>(verts);
+			Center = new Vector2();
+			for (var i = 0; i < Vertices.Count; i++)
+			{
+				Center += Vertices[i];
+			}
+			Center /= Vertices.Count;
 		}
 
 		//Source: http://pastebin.com/wKCFV2kk

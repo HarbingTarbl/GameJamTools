@@ -66,7 +66,7 @@ namespace Jammy.Collision
 			switch (sprite.CollisionType)
 			{
 				case CollisionDataType.Polygon:
-					DrawPolygon((Polygon) sprite.CollisionData);
+					DrawPolygon(sprite.Location, (Polygon)sprite.CollisionData);
 					break;
 
 				case CollisionDataType.Radius:
@@ -101,17 +101,17 @@ namespace Jammy.Collision
 				});
 		}
 
-		public void DrawPolygon(Polygon polygon)
+		public void DrawPolygon(Vector2 location, Polygon polygon)
 		{
 			var i = 0;
 			for (; i < polygon.Vertices.Count - 1; i ++)
 			{
-				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i], 0), Color.Green));
-				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i + 1], 0), Color.Green));
+				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + location, 0), Color.LimeGreen));
+				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i + 1] + location, 0), Color.LimeGreen));
 			}
 
-			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i], 0), Color.Green));
-			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[0], 0), Color.Green));
+			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + location, 0), Color.LimeGreen));
+			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[0] + location, 0), Color.LimeGreen));
 		}
 
 		public void DrawCircle(Vector2 location, float radius)
