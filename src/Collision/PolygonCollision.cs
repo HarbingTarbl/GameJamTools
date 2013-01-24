@@ -10,6 +10,16 @@ namespace Jammy.Collision
 	{
 		public List<Vector2> Vertices;
 
+		public Polygon()
+		{
+			Vertices = new List<Vector2>();
+		}
+
+		public Polygon(params Vector2[] verts)
+		{
+			Vertices = new List<Vector2>(verts);
+		}
+
 		//Source: http://pastebin.com/wKCFV2kk
 		public bool PolygonsCollide (Polygon collider, out Vector2 penetrator)
 		{
