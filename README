@@ -1,0 +1,20 @@
+Jammy is a helpful library of premade game features and classes created to help increase productivity at Game Jams. Most of these components were pulled from older Game Jam projects and so they're written absolutely horribly, but work if you need them.
+
+Features
+ [ ] Normal 2D Camera
+ [/] Dynamic coop camera
+ [/] Basic Sprite support (a lot of jammy works off of the Sprite class)
+ [ ] Animated Sprites
+ [ ] Spriter Skeleton Animations
+ [ ] Tile Map
+ [ ] TMX deserializer for jammy tile map
+ [/] Collision detection (polygon, radius, rectangle)
+ [/] Stack based state machine
+ [/] Transitions built into state machine
+ [ ] Parallax layers
+ [ ] Rendering of debug collision data
+
+ [/] denotes things that have been worked on, but are not finished or tested.
+ [X] denotes things that are complete, or mostly complete and are usable.
+
+ Items with a blank entry [ ] need attention.
