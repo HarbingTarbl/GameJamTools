@@ -14,9 +14,12 @@ namespace Jammy.Collision
             {
                 switch (a.CollisionType)
                 {
-                    case CollisionDataType.Radius:      return RadiusToRadius (a, b);
-                    case CollisionDataType.Rectangle:   return RectToRect (a, b);
-                    case CollisionDataType.Polygon:     return PolyToPoly ( a, b);
+                    case CollisionDataType.Radius:
+		                return RadiusToRadius(a.Location, (float) a.CollisionData, b.Location, (float) b.CollisionData);
+                    case CollisionDataType.Rectangle:   
+						return RectToRect ((Rectangle)a.CollisionData, (Rectangle)b.CollisionData);
+                    case CollisionDataType.Polygon:     
+						return PolyToPoly ( a, b);
                 }
             }
 
@@ -24,18 +27,31 @@ namespace Jammy.Collision
             throw new NotSupportedException();
         }
 
-		public static bool RectToRect(Sprite a, Sprite b)
+		public static bool PointToSprite(Vector2 point, Sprite a)
+		{
+			return true;
+		}
+
+		
+
+		public static bool PointToRect(Vector2 point, Rectangle rect)
+		{
+			return rect.Contains((int)point.X, (int)point.Y);
+		}
+
+		public static bool PointToCircle(Vector2 point, Vector2 circCenter, float r)
+		{
+			return Vector2.Distance(point, circCenter) < r;
+		}
+
+		public static bool RectToRect(Rectangle a, Rectangle b)
         {
-            var ar = (Rectangle) a.CollisionData;
-            var br = (Rectangle) b.CollisionData;
-            return ar.Intersects (br);
+            return a.Intersects (b);
         }
 
-		public static bool RadiusToRadius(Sprite a, Sprite b)
+		public static bool RadiusToRadius(Vector2 al, float af, Vector2 bl, float bf)
         {
-            var af = (float) a.CollisionData;
-            var bf = (float) b.CollisionData;
-            return Vector2.Distance (a.Location, b.Location) - af - bf < 0;
+            return Vector2.Distance (al, bl) < af + bf;
         }
 
 		//TODO: add an out for the penetrator vertex?
