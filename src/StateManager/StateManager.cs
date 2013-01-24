@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Jammy.StateManager
 {
-    public class GameStateManager
+    public class StateManager
     {
-        public GameStateManager()
+        public StateManager()
         {
             states = new List<BaseGameState>();
             stateMap = new Dictionary<string, BaseGameState>();
