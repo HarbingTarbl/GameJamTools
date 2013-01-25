@@ -10,7 +10,8 @@
     <RootNamespace>SampleJammy</RootNamespace>
     <AssemblyName>SampleJammy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>HiDef</XnaProfile>
@@ -105,10 +106,13 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
+    <Reference Include="TiledLib">
+      <HintPath>..\..\lib\TiledLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Player.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Core\Game.cs" />
     <Compile Include="Core\GameState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -145,7 +149,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Jammy.csproj">
+    <ProjectReference Include="..\..\src\Jammy\Jammy.csproj">
       <Project>{8C9FE739-00F8-42E1-B30A-3A0B2DFD5563}</Project>
       <Name>Jammy</Name>
     </ProjectReference>

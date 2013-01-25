@@ -116,7 +116,7 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Jammy.csproj">
+    <ProjectReference Include="..\..\src\Jammy\Jammy.csproj">
       <Project>{8c9fe739-00f8-42e1-b30a-3a0b2dfd5563}</Project>
       <Name>Jammy</Name>
     </ProjectReference>

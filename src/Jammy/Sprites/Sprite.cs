@@ -6,7 +6,7 @@ using Jammy.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Jammy.Sprite
+namespace Jammy.Sprites
 {
     public class Sprite
     {

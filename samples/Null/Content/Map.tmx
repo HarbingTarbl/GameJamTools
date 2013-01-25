@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="25" height="25" tilewidth="64" tileheight="64">
- <tileset firstgid="1" name="Oryx" tilewidth="64" tileheight="64">
-  <tileoffset x="64" y="64"/>
-  <image source="../../../../Arcana/src/Moxy/MoxyContent/tileset.png" width="832" height="256"/>
+<map version="1.0" orientation="orthogonal" width="20" height="14" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Desert" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="Tiles.png" width="265" height="199"/>
  </tileset>
- <tileset firstgid="53" name="Oryx Fixed" tilewidth="64" tileheight="64">
-  <image source="../../../../Arcana/src/Moxy/MoxyContent/tileset.png" width="832" height="256"/>
- </tileset>
- <layer name="Base" width="25" height="25">
+ <layer name="Ground" width="20" height="14">
   <data encoding="base64" compression="zlib">
-   eJxzZWBgcB3G2AwPpqYdjljwqB0DZ4cZml3UjvPhjp2QMK3Np5U99LADmz20jpOBThujeBSP4sGDAfoOprk=
-  </data>
- </layer>
- <layer name="Object" width="25" height="25">
-  <data encoding="base64" compression="zlib">
-   eJxjYBh+wGOQmjXcgM9AO2AUkAVG0/TAgIEK99H4HgWjYPgCACqpAbU=
+   eJyt080KgCAQBGCtU3qqThUFZUW/7/96jdAhZA0XPXynxXHcaBBCDJEkZJATswZahg4KUKCJvBEmBhOYN8MBS6I8E9iXylsT51H9rnffNzNvY34Pd6++fmtgnts7th93f/v7nlCnk5cR7H8jPTNK/8lTBP25k8Oeqwg1lJ7ZH3vuAUChG/s=
   </data>
  </layer>
 </map>

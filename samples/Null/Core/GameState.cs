@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using Jammy;
 using Jammy.Helpers;
+using Jammy.Sprites;
 using Jammy.StateManager;
+using Jammy.TileMap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -22,10 +24,11 @@ namespace SampleJammy
 		Player player;
 		Sprite Rock;
 		CameraSingle camera;
-		KeyboardState oldState;
+		Map map;
 
 		public override void Load()
 		{
+			map = Game.ContentLoader.Load<Map> ("Map");
 			camera = new CameraSingle (Game.ScreenWidth, Game.ScreenHeight);
 			
 			player = new Player();
@@ -56,9 +59,15 @@ namespace SampleJammy
 
 		public override void Draw (SpriteBatch batch)
 		{
-			batch.Begin (SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp,
-				DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, camera.Transformation);
+			batch.Begin (SpriteSortMode.Immediate,
+				BlendState.NonPremultiplied,
+				SamplerState.PointClamp,
+				DepthStencilState.Default,
+				RasterizerState.CullCounterClockwise,
+				null,
+				camera.Transformation);
 
+			map.Draw (batch);
 			Rock.Draw (batch);
 			player.Draw (batch);
 

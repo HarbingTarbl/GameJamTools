@@ -31,7 +31,7 @@ namespace Jammy.Parallax
 		{
 			foreach (var layer in Layers)
 			{
-				layer.
+				//layer. // JERK!
 			}
 		}
 

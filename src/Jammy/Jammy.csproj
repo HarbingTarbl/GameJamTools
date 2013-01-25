@@ -10,7 +10,8 @@
     <RootNamespace>Jammy</RootNamespace>
     <AssemblyName>Jammy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>HiDef</XnaProfile>
@@ -111,7 +112,7 @@
     <Compile Include="Size.cs" />
     <Compile Include="Parallax\ParallaxLayer.cs" />
     <Compile Include="Parallax\ParallaxManager.cs" />
-    <Compile Include="Sprite\Sprite.cs" />
+    <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="StateManager\BaseGameState.cs" />
     <Compile Include="StateManager\ColorTransition.cs" />
     <Compile Include="StateManager\ITransition.cs" />
