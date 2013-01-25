@@ -19,7 +19,7 @@ namespace Jammy.Collision
                     case CollisionDataType.Rectangle:   
 						return RectToRect ((Rectangle)a.CollisionData, (Rectangle)b.CollisionData);
                     case CollisionDataType.Polygon:     
-						return PolyToPoly ( a, b);
+						return PolyToPoly ( (Polygon)a.CollisionData, (Polygon)b.CollisionData);
                 }
             }
 
@@ -35,30 +35,21 @@ namespace Jammy.Collision
 		public static bool PointToPoly(Vector2 point, Polygon poly)
 		{
 			var inside = false;
-			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; i++)
+			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; j = i++)
 			{
-				var x1 = poly.Vertices[i].X + poly.Location.X;
-				var x2 = poly.Vertices[j].X + poly.Location.X;
-				var y1 = poly.Vertices[i].Y + poly.Location.Y;
-				var y2 = poly.Vertices[j].Y + poly.Location.Y;
+				var xi = poly.Vertices[i].X + poly.Location.X;
+				var xj = poly.Vertices[j].X + poly.Location.X;
+				var yi = poly.Vertices[i].Y + poly.Location.Y;
+				var yj = poly.Vertices[j].Y + poly.Location.Y;
 
-				if (y1 < point.Y
-				    && y2 < point.Y)
+				if (
+					((yi > point.Y) != (yj > point.Y))
+					&&
+					(point.X < (xj - xi)*(point.Y - yi)/(yj - yi) + xi)
+					)
 				{
-					continue;
-				}
-
-				if (y1 >= point.Y
-				    && y2 >= point.Y)
-				{
-					continue;
-				}
-
-				var deno = (x1 - x2)*point.Y - (y1 - y2)*point.Y;
-				if (deno > 0f)
 					inside = !inside;
-
-				j = i;
+				}
 			}
 			return inside;
 		}
@@ -84,12 +75,21 @@ namespace Jammy.Collision
         }
 
 		//TODO: add an out for the penetrator vertex?
-		public static bool PolyToPoly (Sprite a, Sprite b)
+		public static bool PolyToPoly(Polygon a, Polygon b)
 		{
-			var ap = (Polygon) a.CollisionData;
-			var bp = (Polygon) b.CollisionData;
-			Vector2 penetrator;
-			return ap.PolygonsCollide (bp, out penetrator);
+			for (var i = 0; i < a.Vertices.Count; i++)
+			{
+				if (PointToPoly(a.Vertices[i] + a.Location, b))
+					return true;
+			}
+
+			for (var i = 0; i < b.Vertices.Count; i++)
+			{
+				if (PointToPoly(b.Vertices[i] + b.Location, a))
+					return true;
+			}
+
+			return false;
 		}
     }
 

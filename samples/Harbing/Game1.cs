@@ -50,6 +50,8 @@ namespace JammyTests
 				new Vector2(100, 100),
 				new Vector2(100, 0)),
 
+			new Circlegon(0, 0, 16),
+
 			new Polygon( //Triangle
 				new Vector2(0, 0),
 				new Vector2(0, 100),
@@ -163,6 +165,17 @@ namespace JammyTests
 					locations[5].Y += deltaY;
 
 				}
+				else
+				if (CollisionChecker.PointToPoly(new Vector2(mouseState.X, mouseState.Y), polys[1]))
+				{
+					polys[1].Location.X += deltaX;
+					polys[1].Location.Y += deltaY;
+					polys[1].RotateRelativeAboutPoint(MathHelper.PiOver4 / 8f, polys[1].RelativeCenter);
+					if (polys[1].Scale >= 4)
+						polys[1].ScaleAbsolute(1f);
+					else
+						polys[1].ScaleRelative(1.1f);
+				}
 			}
 
 			rectangles[0].X = (int)locations[0].X;
@@ -198,6 +211,12 @@ namespace JammyTests
 			if (CollisionChecker.RadiusToRadius(locations[4], circles[0], locations[5], circles[1]))
 			{
 				spriteBatch.DrawString(font, "Circle - Circle Collision!", new Vector2(200, 250), Color.Black);
+			}
+
+			if(CollisionChecker.PolyToPoly(polys[0], polys[1]))
+			{
+				spriteBatch.DrawString(font, "Poly - Poly Collision!", new Vector2(200, 200), Color.Black);
+
 			}
 
 			for (var i = 0; i < locations.Length; i++)
