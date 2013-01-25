@@ -207,6 +207,12 @@ namespace JammyTests
 				spriteBatch.DrawString(font, "Circle - Circle Collision!", new Vector2(200, 250), Color.Black);
 			}
 
+			if(CollisionChecker.PolyToPoly(polys[0], polys[1]))
+			{
+				spriteBatch.DrawString(font, "Poly - Poly Collision!", new Vector2(200, 200), Color.Black);
+
+			}
+
 			for (var i = 0; i < locations.Length; i++)
 			{
 				spriteBatch.DrawString(font, string.Format("{0} : {1},{2}", i + 1, locations[i].X, locations[i].Y),

@@ -10,8 +10,12 @@ namespace Jammy.Collision
 	{
 		public readonly List<Vector2> Vertices;
 		public readonly Vector2 RelativeCenter;
+		
+
 
 		public Vector2 Location;
+
+		
 
 		public Vector2 AbsoluteCenter
 		{
@@ -61,11 +65,8 @@ namespace Jammy.Collision
 			RelativeCenter /= Vertices.Count;
 		}
 
-		//Source: http://pastebin.com/wKCFV2kk
 		public bool PolygonsCollide(Polygon collider, out Vector2 penetrator)
 		{
-			var contacts = new List<Vector2>();
-
 			// Iterate through every verticy on polygon #1
 			for (int i = 0; i < Vertices.Count; i++)
 			{
@@ -86,15 +87,9 @@ namespace Jammy.Collision
 					minProjected = MathHelper.Min(minProjected, projected);
 				}
 
-				if (minProjected < threshhold)
-					contacts.Add(normal * -minProjected);
+
 			}
 
-			if (contacts.Count == Vertices.Count)
-			{
-				penetrator = contacts.Min();
-				return true;
-			}
 
 			penetrator = Vector2.Zero;
 			return false;
