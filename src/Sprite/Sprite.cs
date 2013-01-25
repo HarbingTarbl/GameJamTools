@@ -8,8 +8,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Jammy
 {
-    public abstract class Sprite
+    public class Sprite
     {
+		public Sprite()
+		{
+			Scale = 1f;
+			Color = Color.White;
+		}
+
         public Vector2 Location;
         public float Rotation;
         public float Scale;
