@@ -231,17 +231,17 @@ namespace JammyTests
 		
 			for (var i = 0; i < rectangles.Length; i++)
 			{
-				collisionRender.DrawRectangle(rectangles[i]);
+				collisionRender.DrawRectangle(rectangles[i], Color.White);
 			}
 
 			for (var i = 0; i < polys.Length; i++)
 			{
-				collisionRender.DrawPolygon(polys[i]);
+				collisionRender.DrawPolygon(polys[i], Color.Black);
 			}
 
 			for (var i = 0; i < circles.Length; i++)
 			{
-				collisionRender.DrawCircle(locations[i + 4], circles[i]);
+				collisionRender.DrawCircle(locations[i + 4], circles[i], Color.Red);
 			}
 
 			collisionRender.Stop();

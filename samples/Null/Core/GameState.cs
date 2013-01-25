@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Jammy;
+using Jammy.Collision;
 using Jammy.Helpers;
 using Jammy.Sprites;
 using Jammy.StateManager;
@@ -25,6 +26,8 @@ namespace SampleJammy
 		Sprite Rock;
 		CameraSingle camera;
 		Map map;
+		Polygon[] mapSurfaces;
+		private CollisionRenderer t;
 
 		public override void Load()
 		{
@@ -36,9 +39,18 @@ namespace SampleJammy
 
 			Rock = new Sprite();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
+
+			mapSurfaces = new Polygon[map.Layers.Count];
+			var i = 0;
+			foreach (var layer in map.Layers)
+			{
+				mapSurfaces[i] = new Rectagon(0, 0, layer.Width*map.TileWidth, layer.Height*map.TileHeight);
+				break;
+			}
+
 		}
 
-		public override void Update (GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			var keyState = Keyboard.GetState();
 
@@ -72,6 +84,13 @@ namespace SampleJammy
 			player.Draw (batch);
 
 			batch.End();
+
+			Game.CollisionRenderer.Begin(camera.Transformation);
+
+			Game.CollisionRenderer.DrawPolygon(mapSurfaces[0], Color.Black);
+			Game.CollisionRenderer.Stop();
+
+
 		}
 	}
 }

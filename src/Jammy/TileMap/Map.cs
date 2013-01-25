@@ -25,13 +25,14 @@ namespace Jammy.TileMap
 	{
 		public int TileWidth;
 		public int TileHeight;
+
 		public List<Layer> Layers = new List<Layer> ();
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			foreach (var l in Layers)
 			{
-				spriteBatch.Begin ();
+				//spriteBatch.Begin ();
 
 				for (int y = 0; y < l.Height; y++)
 				{
@@ -50,7 +51,7 @@ namespace Jammy.TileMap
 					}
 				}
 
-				spriteBatch.End ();
+				//spriteBatch.End ();
 			}
 		}
 	}

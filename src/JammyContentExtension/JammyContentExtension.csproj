@@ -49,7 +49,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="TiledLib">
-      <HintPath>..\..\..\lib\TiledLib.dll</HintPath>
+      <HintPath>..\..\lib\TiledLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
