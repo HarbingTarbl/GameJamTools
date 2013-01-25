@@ -10,7 +10,7 @@
     <RootNamespace>Jammy</RootNamespace>
     <AssemblyName>Jammy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>HiDef</XnaProfile>
@@ -90,6 +90,9 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
+    <Reference Include="TiledLib">
+      <HintPath>..\lib\TiledLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cameras\CameraSingle.cs" />
@@ -111,8 +114,8 @@
     <Compile Include="StateManager\ColorTransition.cs" />
     <Compile Include="StateManager\ITransition.cs" />
     <Compile Include="StateManager\StateManager.cs" />
+    <Compile Include="TileMap\Map.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

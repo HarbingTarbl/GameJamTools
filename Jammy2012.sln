@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullSample", "samples\Null\NullSample.csproj", "{02360257-559E-4A85-BEA8-9BF0FE11F2BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jammy", "src\Jammy.csproj", "{8C9FE739-00F8-42E1-B30A-3A0B2DFD5563}"
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarbingSample", "samples\Harbing\HarbingSample.csproj", "{3B0CA7EF-3376-4593-87C8-1432B1BB2C97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarbingSampleContent", "samples\Harbing\HarbingSampleContent\HarbingSampleContent.contentproj", "{DEECE4B3-263F-4F0A-AA0B-9B36A640AA74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JammyContentExtension", "src\ContentExtension\JammyContentExtension\JammyContentExtension.csproj", "{DEE5F6BF-990F-44AF-9A99-658DB2A8A877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3B0CA7EF-3376-4593-87C8-1432B1BB2C97}.Release|x86.Build.0 = Release|x86
 		{DEECE4B3-263F-4F0A-AA0B-9B36A640AA74}.Debug|x86.ActiveCfg = Debug|x86
 		{DEECE4B3-263F-4F0A-AA0B-9B36A640AA74}.Release|x86.ActiveCfg = Release|x86
+		{DEE5F6BF-990F-44AF-9A99-658DB2A8A877}.Debug|x86.ActiveCfg = Debug|x86
+		{DEE5F6BF-990F-44AF-9A99-658DB2A8A877}.Debug|x86.Build.0 = Debug|x86
+		{DEE5F6BF-990F-44AF-9A99-658DB2A8A877}.Release|x86.ActiveCfg = Debug|x86
+		{DEE5F6BF-990F-44AF-9A99-658DB2A8A877}.Release|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
