@@ -8,7 +8,7 @@ Features
  [ ] Spriter Skeleton Animations
  [ ] Tile Map
  [ ] TMX deserializer for jammy tile map
- [/] Collision detection (polygon, radius, rectangle)
+ [X] Collision detection (polygon, radius, rectangle)
  [/] Stack based state machine
  [/] Transitions built into state machine
  [ ] Parallax layers
