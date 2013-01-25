@@ -56,6 +56,54 @@ namespace Jammy.Helpers
             return rect;
         }
 
+		public static Rectangle Clip(this Rectangle self, Rectangle clipping)
+		{
+			var left = self.Left > clipping.Left ? self.Left : clipping.Left;
+			var right = self.Right < clipping.Right ? self.Right : clipping.Right;
+			var top = self.Top > clipping.Top ? self.Top : clipping.Top;
+			var bottom = self.Bottom < clipping.Bottom ? self.Bottom : clipping.Bottom;
+			return new Rectangle(left, top, right - left, bottom - top);
+		}
+
+		public static List<Rectangle> Subtract(this Rectangle self, Rectangle clipping)
+		{
+			var list = new List<Rectangle>();
+
+			if (self.Left < clipping.Left) //Something on the left
+			{
+				list.Add(
+				         self.Clip(new Rectangle(self.Left, clipping.Top, clipping.Left - self.Left,
+												clipping.Bottom - clipping.Top)));
+			}
+
+			if (self.Right > clipping.Right) //Something on the right
+			{
+				list.Add(
+				         self.Clip(new Rectangle(self.Right, clipping.Top, self.Right - clipping.Right,
+				                                 clipping.Bottom - clipping.Top)));
+			}
+
+			if (self.Top < clipping.Top) //Zzz something on top
+			{
+				list.Add(
+				         self.Clip(new Rectangle(self.Left < clipping.Left ? self.Left : clipping.Left, self.Top,
+				                                 (self.Right > clipping.Right ? self.Right : clipping.Right)
+				                                 - (self.Left < clipping.Left ? self.Left : clipping.Left),
+				                                 clipping.Top - self.Top)));
+			}
+
+			if (self.Bottom > clipping.Bottom)
+			{
+				list.Add(
+				         self.Clip(new Rectangle(self.Left < clipping.Left ? self.Left : clipping.Left, clipping.Bottom,
+				                                 (self.Right > clipping.Right ? self.Right : clipping.Right)
+				                                 - (self.Left < clipping.Left ? self.Left : clipping.Left),
+				                                 clipping.Bottom - self.Bottom)));
+			}
+
+			return list;
+		}
+
         public static void CenterRectangle (Rectangle rect, Vector2 v)
         {
             rect.Location = new Point (
