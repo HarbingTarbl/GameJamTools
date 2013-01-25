@@ -10,12 +10,72 @@ namespace Jammy.Collision
 	{
 		public readonly List<Vector2> Vertices;
 		public readonly Vector2 RelativeCenter;
-		
-
 
 		public Vector2 Location;
 
-		
+		#region "Properties"
+		public float Scale
+		{
+			get { return _scale; }
+			set 
+			{ 
+				ScaleAbsolute(value);
+			}
+		}
+
+		public float Width
+		{
+			get
+			{ 
+				UpdateBounds();
+				return Right - Left;
+			}
+		}
+
+		public float Height
+		{
+			get 
+			{ 
+				UpdateBounds();
+				return Bottom - Top;
+			}
+		}
+
+		public float Left
+		{
+			get
+			{
+				UpdateBounds();
+				return _topLeft.X;
+			}
+		}
+
+		public float Right
+		{
+			get
+			{
+				UpdateBounds();
+				return _bottomRight.X;
+			}
+		}
+
+		public float Top
+		{
+			get
+			{
+				UpdateBounds();
+				return _topLeft.Y;
+			}
+		}
+
+		public float Bottom
+		{
+			get
+			{
+				UpdateBounds();
+				return _bottomRight.Y;
+			}
+		}
 
 		public Vector2 AbsoluteCenter
 		{
@@ -30,6 +90,7 @@ namespace Jammy.Collision
 				RotateAbsoluteAboutPoint(value, RelativeCenter);
 			}
 		}
+		#endregion
 
 		public void RotateRelativeAboutPoint(float rotation, Vector2 point)
 		{
@@ -38,6 +99,7 @@ namespace Jammy.Collision
 
 		public void RotateAbsoluteAboutPoint(float rotation, Vector2 point)
 		{
+			_needsUpdate = true;
 			var sin = (float) Math.Sin(rotation);
 			var cos = (float) Math.Cos(rotation);
 			for (var i = 0; i < Vertices.Count; i++)
@@ -47,6 +109,37 @@ namespace Jammy.Collision
 				Vertices[i] = new Vector2(cos*x - sin*y + point.X, sin*x + cos*y + point.Y);
 			}
 			_rotation = rotation;
+		}
+
+		public void InflateAbsolute(float width, float height)
+		{
+			_needsUpdate = true;
+			var newInfalte = new Vector2(width, height);
+			for (var i = 0; i < Vertices.Count; i++)
+			{
+				Vertices[i] = Vertices[i] + newInfalte - _inflateValues;
+			}
+			_inflateValues = newInfalte;
+		}
+
+		public void InflateRelative(float width, float height)
+		{
+			InflateAbsolute(width + _inflateValues.X, height + _inflateValues.Y);
+		}
+
+		public void ScaleRelative(float scale)
+		{
+			ScaleAbsolute(scale * _scale);
+		}
+
+		public void ScaleAbsolute(float scale)
+		{
+			_needsUpdate = true;
+			for (var i = 0; i < Vertices.Count; i++)
+			{
+				Vertices[i] = Vertices[i]*scale/_scale;
+			}
+			_scale = scale;
 		}
 
 		public Polygon()
@@ -65,38 +158,31 @@ namespace Jammy.Collision
 			RelativeCenter /= Vertices.Count;
 		}
 
-		public bool PolygonsCollide(Polygon collider, out Vector2 penetrator)
+		
+
+		private void UpdateBounds()
 		{
-			// Iterate through every verticy on polygon #1
-			for (int i = 0; i < Vertices.Count; i++)
+			if (!_needsUpdate)
+				return;
+
+			_topLeft = _bottomRight = Vertices[0];
+			for (var i = 1; i < Vertices.Count; i++)
 			{
-				var a = Vertices[i];
-				var b = (i + 1 == Vertices.Count ? Vertices[0] : Vertices[i + 1]);
-
-				Vector2 edge = b - a;
-				Vector2 normal = new Vector2(-edge.Y, edge.X);
-				normal.Normalize();
-
-				float threshhold = Vector2.Dot(a, normal);
-				float minProjected = float.PositiveInfinity;
-
-				// Now compare it against every verticy on polygon #2
-				for (int j = 0; j < collider.Vertices.Count; j++)
-				{
-					float projected = Vector2.Dot(collider.Vertices[j], normal);
-					minProjected = MathHelper.Min(minProjected, projected);
-				}
-
-
+				_topLeft = Vector2.Min(_topLeft, Vertices[i]);
+				_bottomRight = Vector2.Max(_bottomRight, Vertices[i]);
 			}
 
-
-			penetrator = Vector2.Zero;
-			return false;
+			_needsUpdate = false;
 		}
 
+		private float _rotation = 0f;
+		private float _scale = 1f;
 
-		private float _rotation;
-		private float _needsUpdate;
+		private bool _needsUpdate = true;
+
+		private Vector2 _inflateValues = Vector2.Zero;
+		private Vector2 _topLeft;
+		private Vector2 _bottomRight;
+
 	}
 }

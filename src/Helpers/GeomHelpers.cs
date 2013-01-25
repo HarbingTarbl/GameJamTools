@@ -8,7 +8,28 @@ namespace Jammy.Helpers
 {
     public static class GeomHelpers
     {
-        public static Vector2 ToVector2(this Point self)
+	    public static Vector2[] SinCosLookupTable;
+	    public const int LookupTableSize = 64;
+
+		static GeomHelpers()
+		{
+			SinCosLookupTable = new Vector2[LookupTableSize];
+			for (var i = 0; i < LookupTableSize; i++)
+			{
+				var n = (((float) i)/LookupTableSize)*MathHelper.TwoPi;
+				SinCosLookupTable[i] = new Vector2((float) Math.Cos(n), (float) Math.Sin(n));
+
+			}
+		}
+
+		public static Vector2 LookupAngle(float radians)
+		{
+			var n = (radians%MathHelper.TwoPi)/MathHelper.TwoPi*LookupTableSize;
+			return Vector2.SmoothStep(SinCosLookupTable[(int) Math.Floor(n)], SinCosLookupTable[(int) Math.Ceiling(n)], n);
+		}
+
+
+		public static Vector2 ToVector2(this Point self)
         {
             return new Vector2(self.X, self.Y);
         }
