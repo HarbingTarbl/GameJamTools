@@ -32,7 +32,8 @@ namespace Jammy
 
         public virtual void Draw(SpriteBatch batch)
         {
-            batch.Draw (Texture, Location, null, Color.White);//, Rotation, Vector2.Zero, 1f, SpriteEffects.None, 0);
+            batch.Draw (Texture, Location, null, Color.White, Rotation,
+				Vector2.Zero, 1f, SpriteEffects.None, 0);
         }
     }
 }
