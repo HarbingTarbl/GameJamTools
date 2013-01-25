@@ -40,14 +40,16 @@ namespace SampleJammy
 			Rock = new Sprite();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
 
-			mapSurfaces = new Polygon[map.Layers.Count];
-			var i = 0;
-			foreach (var layer in map.Layers)
-			{
-				mapSurfaces[i] = new Rectagon(0, 0, layer.Width*map.TileWidth, layer.Height*map.TileHeight);
-				break;
-			}
 
+			mapSurfaces = new Polygon[map.Layers[0].Tiles.Length];
+			for (var x = 0; x < map.Layers[0].Width; x++)
+			{
+				for (var y = 0; y < map.Layers[0].Height; y++)
+				{
+					mapSurfaces[y*map.Layers[0].Width + x] = new Rectagon(x*map.TileWidth, y*map.TileHeight, map.TileWidth,
+					                                                      map.TileHeight);
+				}
+			}
 		}
 
 		public override void Update(GameTime gameTime)
@@ -86,8 +88,10 @@ namespace SampleJammy
 			batch.End();
 
 			Game.CollisionRenderer.Begin(camera.Transformation);
-
-			Game.CollisionRenderer.DrawPolygon(mapSurfaces[0], Color.Black);
+			for (var i = 0; i < mapSurfaces.Length; i++)
+			{
+				Game.CollisionRenderer.DrawPolygon(mapSurfaces[i], Color.Lime);
+			}
 			Game.CollisionRenderer.Stop();
 
 
