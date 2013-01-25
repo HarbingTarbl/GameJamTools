@@ -21,12 +21,17 @@ namespace SampleJammy
 		public static GraphicsDeviceManager Graphics;
 		public static StateManager States;
 		public static ContentManager ContentLoader;
+		public static int ScreenWidth;
+		public static int ScreenHeight;
 
 		SpriteBatch spriteBatch;
 
 		public Game()
 		{
 			Graphics = new GraphicsDeviceManager(this);
+			ScreenWidth = Graphics.PreferredBackBufferWidth;
+			ScreenHeight = Graphics.PreferredBackBufferHeight;
+
 			Content.RootDirectory = "Content";
 		}
 
