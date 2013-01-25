@@ -86,14 +86,18 @@ namespace Jammy.Helpers
 			if (self.Top < clipping.Top) //Zzz something on top
 			{
 				list.Add(
-				         self.Clip(new Rectangle(clipping.Left, self.Top, clipping.Right - clipping.Left,
+				         self.Clip(new Rectangle(self.Left < clipping.Left ? self.Left : clipping.Left, self.Top,
+				                                 (self.Right > clipping.Right ? self.Right : clipping.Right)
+				                                 - (self.Left < clipping.Left ? self.Left : clipping.Left),
 				                                 clipping.Top - self.Top)));
 			}
 
 			if (self.Bottom > clipping.Bottom)
 			{
 				list.Add(
-				         self.Clip(new Rectangle(clipping.Left, clipping.Bottom, clipping.Right - clipping.Left,
+				         self.Clip(new Rectangle(self.Left < clipping.Left ? self.Left : clipping.Left, clipping.Bottom,
+				                                 (self.Right > clipping.Right ? self.Right : clipping.Right)
+				                                 - (self.Left < clipping.Left ? self.Left : clipping.Left),
 				                                 clipping.Bottom - self.Bottom)));
 			}
 
