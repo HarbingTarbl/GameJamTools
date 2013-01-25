@@ -25,6 +25,16 @@ namespace Jammy.Helpers
             return value;
         }
 
+		public static int Max(int value1, int value2)
+		{
+			return (value1 > value2) ? value1 : value2;
+		}
+
+		public static int Min(int value1, int value2)
+		{
+			return (value1 < value2) ? value1 : value2;
+		}
+
         public static int NextDouble2 (this Random self)
         {
             return self.NextDouble() < 0.5 ? 0 : 1;

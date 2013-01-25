@@ -50,7 +50,7 @@ namespace JammyTests
 				new Vector2(100, 100),
 				new Vector2(100, 0)),
 
-			new Circlegon(0, 0, 16),
+			new Circlegon(200, 200, 150, 64),
 
 			new Polygon( //Triangle
 				new Vector2(0, 0),

@@ -106,6 +106,8 @@
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Size.cs" />
+    <Compile Include="Parallax\ParallaxLayer.cs" />
+    <Compile Include="Parallax\ParallaxManager.cs" />
     <Compile Include="Sprite\Sprite.cs" />
     <Compile Include="StateManager\BaseGameState.cs" />
     <Compile Include="StateManager\ColorTransition.cs" />
