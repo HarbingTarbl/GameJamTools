@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using ClipperLib;
 
 namespace Jammy.Collision
 {
@@ -109,6 +110,39 @@ namespace Jammy.Collision
 				Vertices[i] = new Vector2(cos*x - sin*y + point.X, sin*x + cos*y + point.Y);
 			}
 			_rotation = rotation;
+		}
+
+		public static List<Polygon> Clip(Polygon source, Polygon clipper)
+		{
+			var c = new Clipper();
+			var s = new List<IntPoint>();
+			var r = new List<IntPoint>();
+			for (var i = 0; i < source.Vertices.Count; i++)
+			{
+				s.Add(new IntPoint((int)(source.Vertices[i].X + source.Location.X), (int)(source.Vertices[i].Y + source.Location.Y)));
+			}
+			for (var i = 0; i < clipper.Vertices.Count; i++)
+			{
+				r.Add(new IntPoint((int)(clipper.Vertices[i].X + clipper.Location.X), (int)(clipper.Vertices[i].Y + clipper.Location.Y)));
+			}
+
+
+
+			c.AddPolygon(s, PolyType.ptSubject);
+			c.AddPolygon(r, PolyType.ptClip);
+			var sol = new List<List<IntPoint>>();
+			c.Execute(ClipType.ctDifference, sol);
+			var ret = new List<Polygon>();
+			for (var i = 0; i < sol.Count; i++)
+			{
+				var poly = new Polygon();
+				for (var k = 0; k < sol[i].Count; k++)
+				{
+					poly.Vertices.Add(new Vector2(sol[i][k].X, sol[i][k].Y));
+				}
+				ret.Add(poly);
+			}
+			return ret;
 		}
 
 		public void InflateAbsolute(float width, float height)
