@@ -12,21 +12,42 @@ namespace Jammy.Sprites
     {
 		public Sprite()
 		{
-			Scale = 1f;
+			_scale = 1f;
 			Color = Color.White;
+			CollisionData = new Polygon();
 		}
 
         public Vector2 Location;
-        public float Rotation;
-        public float Scale;
         public Texture2D Texture;
         public Vector2 Origin;
         public Color Color;
-        
+
+       
         public CollisionDataType CollisionType;
         public Polygon CollisionData;
 
-        public virtual void Update (GameTime gameTime)
+
+	    public float Scale
+	    {
+		    get { return _scale; }
+		    set
+		    {
+			    CollisionData.Scale = value;
+			    _scale = value;
+		    }
+	    }
+
+	    public float Rotation
+	    {
+		    get { return _rotation;  }
+			set
+			{
+				CollisionData.Rotation = value;
+				_rotation = value;
+			} 
+		}
+
+	    public virtual void Update (GameTime gameTime)
         {
 	        CollisionData.Location = Location;
         }
@@ -36,5 +57,8 @@ namespace Jammy.Sprites
             batch.Draw (Texture, Location, null, Color.White, Rotation,
 				Vector2.Zero, 1f, SpriteEffects.None, 0);
         }
+
+	    private float _scale;
+	    private float _rotation;
     }
 }

@@ -16,7 +16,7 @@ namespace Jammy.Collision
 			for (var i = 0; i < divisions; i++)
 			{
 				var n = GeomHelpers.LookupTableSize/divisions*i;
-				Vertices.Add(GeomHelpers.SinCosLookupTable[n] * radius);
+				Vertices.Add(GeomHelpers.SinCosLookupTable[n] * radius + new Vector2(radius, radius));
 			}
 
 			Location = new Vector2(x, y);
