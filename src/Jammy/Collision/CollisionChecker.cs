@@ -21,6 +21,9 @@ namespace Jammy.Collision
 		
 		public static bool PointToPoly(Vector2 point, Polygon poly)
 		{
+		
+
+
 			var inside = false;
 			for (int i = 0, j = poly.Vertices.Count - 1; i < poly.Vertices.Count; j = i++)
 			{
