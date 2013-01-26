@@ -51,24 +51,7 @@ namespace Jammy.Collision
 
 		public void Draw(Sprite sprite, Color? color = null)
 		{
-			switch (sprite.CollisionType)
-			{
-				case CollisionDataType.Polygon:
-					DrawPolygon((Polygon)sprite.CollisionData, color.GetValueOrDefault());
-					break;
-
-				case CollisionDataType.Radius:
-					DrawCircle(sprite.Location, (float) sprite.CollisionData, color.GetValueOrDefault());
-					break;
-
-				case CollisionDataType.Rectangle:
-					DrawRectangle((Rectangle) sprite.CollisionData, color.GetValueOrDefault());
-					break;
-				default:
-					throw new NotImplementedException(string.Format("Unable to draw debug lines for {0} colliders!",
-					                                  Enum.GetName(typeof (CollisionDataType), sprite.CollisionType)));
-
-			}
+			DrawPolygon((Polygon) sprite.CollisionData, color.GetValueOrDefault());
 		}
 
 

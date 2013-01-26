@@ -24,10 +24,11 @@ namespace Jammy.Sprites
         public Color Color;
         
         public CollisionDataType CollisionType;
-        public object CollisionData;
+        public Polygon CollisionData;
 
         public virtual void Update (GameTime gameTime)
         {
+	        CollisionData.Location = Location;
         }
 
         public virtual void Draw(SpriteBatch batch)

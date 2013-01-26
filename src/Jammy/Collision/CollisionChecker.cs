@@ -11,21 +11,7 @@ namespace Jammy.Collision
     {
         public static bool Colliding (Sprite a, Sprite b)
         {
-            if (a.CollisionType == b.CollisionType)
-            {
-                switch (a.CollisionType)
-                {
-                    case CollisionDataType.Radius:
-		                return RadiusToRadius(a.Location, (float) a.CollisionData, b.Location, (float) b.CollisionData);
-                    case CollisionDataType.Rectangle:   
-						return RectToRect ((Rectangle)a.CollisionData, (Rectangle)b.CollisionData);
-                    case CollisionDataType.Polygon:     
-						return PolyToPoly ( (Polygon)a.CollisionData, (Polygon)b.CollisionData);
-                }
-            }
-
-            //TODO: RectToRadius, RectToPoly, RadiusToRect, RadiusToPoly
-            throw new NotSupportedException();
+	        return PolyToPoly(a.CollisionData, b.CollisionData);
         }
 
 		public static bool PointToSprite(Vector2 point, Sprite a)
