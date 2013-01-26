@@ -21,23 +21,9 @@ namespace Jammy.Collision
 				World = Matrix.Identity,
 				View = Matrix.Identity,
 			};
-
-			CirclePreComputes = new float[2][];
-			CirclePreComputes[0] = new float[CircleSubDivides];
-			CirclePreComputes[1] = new float[CircleSubDivides];
-			for (var i = 0; i < CircleSubDivides; i++)
-			{
-				CirclePreComputes[0][i] = (float)Math.Cos((i*2f*Math.PI) / CircleSubDivides);
-			}
-
-			for (var i = 0; i < CircleSubDivides; i++)
-			{
-				CirclePreComputes[1][i] = (float)Math.Sin((i * 2f * Math.PI) / CircleSubDivides);
-			}
-
 		}
 
-		public void Begin()
+		public void Begin(Matrix? world = null, Matrix? view = null)
 		{
 			hasBegun = true;
 			oldBlend = Device.BlendState;
@@ -47,12 +33,13 @@ namespace Jammy.Collision
 			{
 				CullMode = CullMode.None
 			};
+
+			effect.World = world.HasValue ? world.Value : Matrix.Identity;
+			effect.View = view.HasValue ? view.Value : Matrix.Identity;
 		}
 
 		public void Stop()
 		{
-	
-
 			effect.CurrentTechnique.Passes[0].Apply();
 			Device.DrawUserPrimitives(PrimitiveType.LineList, vertsToDraw.ToArray(), 0, vertsToDraw.Count / 2, VertexPositionColor.VertexDeclaration);
 			vertsToDraw.Clear();
@@ -62,20 +49,20 @@ namespace Jammy.Collision
 			Device.DepthStencilState = oldStencil;
 		}
 
-		public void Draw(Sprite sprite)
+		public void Draw(Sprite sprite, Color? color = null)
 		{
 			switch (sprite.CollisionType)
 			{
 				case CollisionDataType.Polygon:
-					DrawPolygon((Polygon)sprite.CollisionData);
+					DrawPolygon((Polygon)sprite.CollisionData, color.GetValueOrDefault());
 					break;
 
 				case CollisionDataType.Radius:
-					DrawCircle(sprite.Location, (float) sprite.CollisionData);
+					DrawCircle(sprite.Location, (float) sprite.CollisionData, color.GetValueOrDefault());
 					break;
 
 				case CollisionDataType.Rectangle:
-					DrawRectangle((Rectangle) sprite.CollisionData);
+					DrawRectangle((Rectangle) sprite.CollisionData, color.GetValueOrDefault());
 					break;
 				default:
 					throw new NotImplementedException(string.Format("Unable to draw debug lines for {0} colliders!",
@@ -86,54 +73,27 @@ namespace Jammy.Collision
 
 
 
-		public void DrawRectangle(Rectangle rectangle)
+		public void DrawRectangle(Rectangle rectangle, Color color)
 		{
-			vertsToDraw.AddRange(
-				new []
-				{
-					new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Top, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Right, rectangle.Bottom, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Bottom, 0), Color.Red),
-					new VertexPositionColor(new Vector3(rectangle.Left, rectangle.Top, 0), Color.Red),
-				});
+			DrawPolygon(new Rectagon(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), color);
 		}
 
-		public void DrawPolygon(Polygon polygon)
+		public void DrawPolygon(Polygon polygon, Color color)
 		{
 			var i = 0;
 			for (; i < polygon.Vertices.Count - 1; i ++)
 			{
-				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + polygon.Location, 0), Color.LimeGreen));
-				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i + 1] + polygon.Location, 0), Color.LimeGreen));
+				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + polygon.Location, 0), color));
+				vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i + 1] + polygon.Location, 0), color));
 			}
 
-			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + polygon.Location, 0), Color.LimeGreen));
-			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[0] + polygon.Location, 0), Color.LimeGreen));
+			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[i] + polygon.Location, 0), color));
+			vertsToDraw.Add(new VertexPositionColor(new Vector3(polygon.Vertices[0] + polygon.Location, 0), color));
 		}
 
-		public void DrawCircle(Vector2 location, float radius)
+		public void DrawCircle(Vector2 location, float radius, Color color)
 		{
-			var i = 0;
-			for (; i < CircleSubDivides - 1; i++)
-			{
-				vertsToDraw.Add(
-								new VertexPositionColor(
-									new Vector3(CirclePreComputes[0][i], CirclePreComputes[1][i], 0) * radius + new Vector3(location, 0), Color.Black));
-				vertsToDraw.Add(
-								new VertexPositionColor(
-									new Vector3(CirclePreComputes[0][i + 1], CirclePreComputes[1][i + 1], 0) * radius + new Vector3(location, 0), Color.Black));
-			}
-
-			vertsToDraw.Add(
-					new VertexPositionColor(
-						new Vector3(CirclePreComputes[0][i], CirclePreComputes[1][i], 0) * radius + new Vector3(location, 0), Color.Black));
-			vertsToDraw.Add(
-							new VertexPositionColor(
-								new Vector3(CirclePreComputes[0][0], CirclePreComputes[1][0], 0) * radius + new Vector3(location, 0), Color.Black));
+			DrawPolygon(new Circlegon(location, radius), color);
 		}
 
 		public readonly GraphicsDevice Device;

@@ -6,8 +6,8 @@ Features
  [/] Basic Sprite support (a lot of jammy works off of the Sprite class)
  [ ] Animated Sprites
  [ ] Spriter Skeleton Animations
- [ ] Tile Map
- [ ] TMX deserializer for jammy tile map
+ [/] Tile Map
+ [/] TMX deserializer for jammy tile map
  [X] Collision detection (polygon, radius, rectangle)
  [/] Stack based state machine
  [/] Transitions built into state machine

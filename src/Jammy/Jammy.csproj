@@ -108,6 +108,7 @@
     <Compile Include="Helpers\MiscHelpers.cs" />
     <Compile Include="Helpers\InputHelpers.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Parallax\StaticParallax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="Parallax\ParallaxLayer.cs" />

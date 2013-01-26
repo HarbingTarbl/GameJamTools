@@ -27,61 +27,74 @@ namespace SampleJammy
 		Sprite Rock;
 		CameraSingle camera;
 		Map map;
-		CollisionRenderer debug;
-		ParallaxManager parallax;
+		Polygon[] mapSurfaces;
+		private CollisionRenderer t;
+		private ParallaxLayer layer;
+
+
 
 		public override void Load()
 		{
-			debug = new CollisionRenderer (Game.Graphics.GraphicsDevice);
-
 			map = Game.ContentLoader.Load<Map> ("Map");
 			camera = new CameraSingle (Game.ScreenWidth, Game.ScreenHeight);
-			
-			player = new Player();
+
+			player = new Player ();
 			player.Texture = Game.ContentLoader.Load<Texture2D> ("Player");
 
-			Rock = new Sprite();
+			Rock = new Sprite ();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
 
-			// TODO: Holy hell this API is brutal, and it doesn't work
-			parallax = new ParallaxManager();
-			var p1 = new ParallaxLayer();
-			var p2 = new ParallaxLayer ();
-			var p3 = new ParallaxLayer ();
-			var p4 = new ParallaxLayer ();
-			p1.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax1")});
-			p2.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax2")});
-			p3.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax3")});
-			p4.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax4")});
-			parallax.AddLayer (p1);
-			parallax.AddLayer (p2);
-			parallax.AddLayer (p3);
-			parallax.AddLayer (p4);
+			layer = new ParallaxLayer ();
+			layer.Bounds = new Rectangle (0, 0, 400, 400);
+			layer.Sprites.Add (new ParallaxSprite ()
+			{
+				Color = Color.White,
+				DrawRectangle = new Rectangle (0, 0, 600, 100),
+				SourceRectangle = new Rectangle (0, 0, 250, 113),
+				Texture = Game.ContentLoader.Load<Texture2D> ("rock")
+			});
+
+
+			mapSurfaces = new Polygon[map.Layers[0].Tiles.Length];
+			for (var x = 0; x < map.Layers[0].Width; x++)
+			{
+				for (var y = 0; y < map.Layers[0].Height; y++)
+				{
+					mapSurfaces[y * map.Layers[0].Width + x] = new Rectagon (x * map.TileWidth, y * map.TileHeight, map.TileWidth,
+																		  map.TileHeight);
+				}
+			}
 		}
 
-		public override void Update (GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
-			var keyState = Keyboard.GetState();
+			var keyState = Keyboard.GetState ();
 
-			if (keyState.IsKeyDown (Keys.A)) {
+			if (keyState.IsKeyDown (Keys.A))
+			{
 				player.Location.X -= 5f;
-			} else if (keyState.IsKeyDown (Keys.D)) {
+			}
+			else if (keyState.IsKeyDown (Keys.D))
+			{
 				player.Location.X += 5f;
 			}
-			if (keyState.IsKeyDown (Keys.W)) {
+			if (keyState.IsKeyDown (Keys.W))
+			{
 				player.Location.Y -= 5f;
-			} else if (keyState.IsKeyDown (Keys.S)) {
+			}
+			else if (keyState.IsKeyDown (Keys.S))
+			{
 				player.Location.Y += 5f;
 			}
 
+			layer.Update (gameTime);
+
 			player.Update (gameTime);
-			camera.CenterOnPoint (player.Location);//Game.ScreenWidth/2, Game.ScreenHeight/2);
+			camera.CenterOnPoint (player.Location);
 		}
 
-		public override void Draw (SpriteBatch batch)
+		public override void Draw(SpriteBatch batch)
 		{
-			parallax.Draw (batch, camera.Transformation);
-
 			batch.Begin (SpriteSortMode.Immediate,
 				BlendState.NonPremultiplied,
 				SamplerState.PointClamp,
@@ -90,27 +103,22 @@ namespace SampleJammy
 				null,
 				camera.Transformation);
 
-			map.Draw (batch);
-			Rock.Draw (batch);
-			player.Draw (batch);
+			layer.Draw (batch, Matrix.Identity);
+
+			//map.Draw (batch);
+			//Rock.Draw (batch);
+			//player.Draw (batch);
+
 			batch.End ();
 
-			// Display debug information
-			debug.Begin ();
-			foreach (var l in map.ObjectLayers)
+			Game.CollisionRenderer.Begin (camera.Transformation);
+			for (var i = 0; i < mapSurfaces.Length; i++)
 			{
-				foreach (var p in l.Polygons)
-				{
-					//TODO: I have to transform the polygon
-					// manually to adhere to the camera transformation
-					// I think it would be better if I pass in the current
-					// camera transformation into debug.Begin
-					p.Location.X = -camera.Location.X;
-					p.Location.Y = -camera.Location.Y;
-					debug.DrawPolygon (p);
-				}
+				Game.CollisionRenderer.DrawPolygon (mapSurfaces[i], Color.Lime);
 			}
-			debug.Stop ();
+			Game.CollisionRenderer.Stop ();
+
+
 		}
 	}
 }

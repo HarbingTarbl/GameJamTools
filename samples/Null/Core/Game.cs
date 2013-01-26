@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jammy.Collision;
 using Jammy.StateManager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -21,6 +22,7 @@ namespace SampleJammy
 		public static GraphicsDeviceManager Graphics;
 		public static StateManager States;
 		public static ContentManager ContentLoader;
+		public static CollisionRenderer CollisionRenderer;
 		public static int ScreenWidth;
 		public static int ScreenHeight;
 
@@ -40,6 +42,8 @@ namespace SampleJammy
 			spriteBatch = new SpriteBatch (GraphicsDevice);
 
 			ContentLoader = Content;
+
+			CollisionRenderer = new CollisionRenderer(GraphicsDevice);
 
 			States = new StateManager();
 			States.Load (Assembly.GetExecutingAssembly());

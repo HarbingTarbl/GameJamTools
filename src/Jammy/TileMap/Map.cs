@@ -33,6 +33,7 @@ namespace Jammy.TileMap
 	{
 		public int TileWidth;
 		public int TileHeight;
+
 		public List<Layer> Layers = new List<Layer> ();
 		public List<ObjectLayer> ObjectLayers = new List<ObjectLayer>();
 
