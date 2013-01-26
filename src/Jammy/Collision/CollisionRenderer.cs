@@ -54,8 +54,6 @@ namespace Jammy.Collision
 			DrawPolygon((Polygon) sprite.CollisionData, color.GetValueOrDefault());
 		}
 
-
-
 		public void DrawRectangle(Rectangle rectangle, Color color)
 		{
 			DrawPolygon(new Rectagon(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), color);
@@ -63,6 +61,9 @@ namespace Jammy.Collision
 
 		public void DrawPolygon(Polygon polygon, Color color)
 		{
+			if (polygon.Vertices.Count == 0)
+				return;
+
 			var i = 0;
 			for (; i < polygon.Vertices.Count - 1; i ++)
 			{
