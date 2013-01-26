@@ -65,6 +65,16 @@ namespace Jammy
             }
         }
 
+	    public int Width
+	    {
+		    get { return width; }
+	    }
+
+	    public int Height
+	    {
+		    get { return height; }
+	    }
+
         private int width;
         private int height;
         private Vector2 screenHalf;
