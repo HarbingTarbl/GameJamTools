@@ -17,13 +17,14 @@ namespace Jammy.Collision
 			effect = new BasicEffect(device)
 			{
 				VertexColorEnabled = true,
-				Projection = Matrix.CreateTranslation(-0.5f, -0.5f, 0) * Matrix.CreateOrthographicOffCenter(0, Device.Viewport.Width, Device.Viewport.Height, 0, 0, 1),
 				World = Matrix.Identity,
 				View = Matrix.Identity,
+				Projection = Matrix.CreateTranslation(-0.5f, -0.5f, 0) *Matrix.CreateOrthographicOffCenter(0,  device.Viewport.Width, device.Viewport.Height, 0, 0, 1)
+
 			};
 		}
 
-		public void Begin(Matrix? world = null, Matrix? view = null)
+		public void Begin(Matrix? projection)
 		{
 			hasBegun = true;
 			oldBlend = Device.BlendState;
@@ -34,8 +35,9 @@ namespace Jammy.Collision
 				CullMode = CullMode.None
 			};
 
-			effect.World = world.HasValue ? world.Value : Matrix.Identity;
-			effect.View = view.HasValue ? view.Value : Matrix.Identity;
+			effect.World = projection.Value;
+			//effect.Projection = projection.Value;
+			//effect.View = projection.Value;
 		}
 
 		public void Stop()
