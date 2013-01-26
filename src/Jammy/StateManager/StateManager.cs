@@ -71,6 +71,11 @@ namespace Jammy.StateManager
                 throw new Exception ("There aren't enough states to pop.");
         }
 
+		public void Add(BaseGameState state)
+		{
+			stateMap[state.Name] = state;
+		}
+
         public void Update(GameTime gameTime)
         {
             // TODO: Find a better way to handle this
