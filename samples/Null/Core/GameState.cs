@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Jammy;
+using Jammy.Collision;
 using Jammy.Helpers;
+using Jammy.Parallax;
 using Jammy.Sprites;
 using Jammy.StateManager;
 using Jammy.TileMap;
@@ -25,9 +27,13 @@ namespace SampleJammy
 		Sprite Rock;
 		CameraSingle camera;
 		Map map;
+		CollisionRenderer debug;
+		ParallaxManager parallax;
 
 		public override void Load()
 		{
+			debug = new CollisionRenderer (Game.Graphics.GraphicsDevice);
+
 			map = Game.ContentLoader.Load<Map> ("Map");
 			camera = new CameraSingle (Game.ScreenWidth, Game.ScreenHeight);
 			
@@ -36,6 +42,21 @@ namespace SampleJammy
 
 			Rock = new Sprite();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
+
+			// TODO: Holy hell this API is brutal, and it doesn't work
+			parallax = new ParallaxManager();
+			var p1 = new ParallaxLayer();
+			var p2 = new ParallaxLayer ();
+			var p3 = new ParallaxLayer ();
+			var p4 = new ParallaxLayer ();
+			p1.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax1")});
+			p2.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax2")});
+			p3.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax3")});
+			p4.Sprites.Add (new ParallaxSprite {Texture = Game.ContentLoader.Load<Texture2D> ("parallax4")});
+			parallax.AddLayer (p1);
+			parallax.AddLayer (p2);
+			parallax.AddLayer (p3);
+			parallax.AddLayer (p4);
 		}
 
 		public override void Update (GameTime gameTime)
@@ -53,12 +74,14 @@ namespace SampleJammy
 				player.Location.Y += 5f;
 			}
 
-			player.Update (gameTime);	
-			camera.CenterOnPoint  (player.Location);
+			player.Update (gameTime);
+			camera.CenterOnPoint (player.Location);//Game.ScreenWidth/2, Game.ScreenHeight/2);
 		}
 
 		public override void Draw (SpriteBatch batch)
 		{
+			parallax.Draw (batch, camera.Transformation);
+
 			batch.Begin (SpriteSortMode.Immediate,
 				BlendState.NonPremultiplied,
 				SamplerState.PointClamp,
@@ -70,8 +93,24 @@ namespace SampleJammy
 			map.Draw (batch);
 			Rock.Draw (batch);
 			player.Draw (batch);
+			batch.End ();
 
-			batch.End();
+			// Display debug information
+			debug.Begin ();
+			foreach (var l in map.ObjectLayers)
+			{
+				foreach (var p in l.Polygons)
+				{
+					//TODO: I have to transform the polygon
+					// manually to adhere to the camera transformation
+					// I think it would be better if I pass in the current
+					// camera transformation into debug.Begin
+					p.Location.X = -camera.Location.X;
+					p.Location.Y = -camera.Location.Y;
+					debug.DrawPolygon (p);
+				}
+			}
+			debug.Stop ();
 		}
 	}
 }
