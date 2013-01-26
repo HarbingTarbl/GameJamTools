@@ -8,4 +8,9 @@
    eJyt080KgCAQBGCtU3qqThUFZUW/7/96jdAhZA0XPXynxXHcaBBCDJEkZJATswZahg4KUKCJvBEmBhOYN8MBS6I8E9iXylsT51H9rnffNzNvY34Pd6++fmtgnts7th93f/v7nlCnk5cR7H8jPTNK/8lTBP25k8Oeqwg1lJ7ZH3vuAUChG/s=
   </data>
  </layer>
+ <objectgroup name="Collision" width="20" height="14">
+  <object x="135" y="-307">
+   <polygon points="42,308 40,369 -133,370 -133,310"/>
+  </object>
+ </objectgroup>
 </map>

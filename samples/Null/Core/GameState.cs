@@ -37,21 +37,21 @@ namespace SampleJammy
 		{
 			map = Game.ContentLoader.Load<Map> ("Map");
 			camera = new CameraSingle (Game.ScreenWidth, Game.ScreenHeight);
-			
-			player = new Player();
+
+			player = new Player ();
 			player.Texture = Game.ContentLoader.Load<Texture2D> ("Player");
 
-			Rock = new Sprite();
+			Rock = new Sprite ();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
 
-			layer = new ParallaxLayer();
-			layer.Bounds = new Rectangle(0, 0, 400, 400);
-			layer.Sprites.Add(new ParallaxSprite()
+			layer = new ParallaxLayer ();
+			layer.Bounds = new Rectangle (0, 0, 400, 400);
+			layer.Sprites.Add (new ParallaxSprite ()
 			{
 				Color = Color.White,
-				DrawRectangle = new Rectangle(0, 0, 600, 100),
-				SourceRectangle = new Rectangle(0, 0, 250, 113),
-				Texture = Game.ContentLoader.Load<Texture2D>("rock")
+				DrawRectangle = new Rectangle (0, 0, 600, 100),
+				SourceRectangle = new Rectangle (0, 0, 250, 113),
+				Texture = Game.ContentLoader.Load<Texture2D> ("rock")
 			});
 
 
@@ -60,34 +60,40 @@ namespace SampleJammy
 			{
 				for (var y = 0; y < map.Layers[0].Height; y++)
 				{
-					mapSurfaces[y*map.Layers[0].Width + x] = new Rectagon(x*map.TileWidth, y*map.TileHeight, map.TileWidth,
-					                                                      map.TileHeight);
+					mapSurfaces[y * map.Layers[0].Width + x] = new Rectagon (x * map.TileWidth, y * map.TileHeight, map.TileWidth,
+																		  map.TileHeight);
 				}
 			}
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			var keyState = Keyboard.GetState();
+			var keyState = Keyboard.GetState ();
 
-			if (keyState.IsKeyDown (Keys.A)) {
+			if (keyState.IsKeyDown (Keys.A))
+			{
 				player.Location.X -= 5f;
-			} else if (keyState.IsKeyDown (Keys.D)) {
+			}
+			else if (keyState.IsKeyDown (Keys.D))
+			{
 				player.Location.X += 5f;
 			}
-			if (keyState.IsKeyDown (Keys.W)) {
+			if (keyState.IsKeyDown (Keys.W))
+			{
 				player.Location.Y -= 5f;
-			} else if (keyState.IsKeyDown (Keys.S)) {
+			}
+			else if (keyState.IsKeyDown (Keys.S))
+			{
 				player.Location.Y += 5f;
 			}
 
-			layer.Update(gameTime);
+			layer.Update (gameTime);
 
-			player.Update (gameTime);	
-			camera.CenterOnPoint  (player.Location);
+			player.Update (gameTime);
+			camera.CenterOnPoint (player.Location);
 		}
 
-		public override void Draw (SpriteBatch batch)
+		public override void Draw(SpriteBatch batch)
 		{
 			batch.Begin (SpriteSortMode.Immediate,
 				BlendState.NonPremultiplied,
@@ -97,20 +103,20 @@ namespace SampleJammy
 				null,
 				camera.Transformation);
 
-			layer.Draw(batch, Matrix.Identity);
+			layer.Draw (batch, Matrix.Identity);
 
 			//map.Draw (batch);
 			//Rock.Draw (batch);
 			//player.Draw (batch);
 
-			batch.End();
+			batch.End ();
 
-			Game.CollisionRenderer.Begin(camera.Transformation);
+			Game.CollisionRenderer.Begin (camera.Transformation);
 			for (var i = 0; i < mapSurfaces.Length; i++)
 			{
-				Game.CollisionRenderer.DrawPolygon(mapSurfaces[i], Color.Lime);
+				Game.CollisionRenderer.DrawPolygon (mapSurfaces[i], Color.Lime);
 			}
-			Game.CollisionRenderer.Stop();
+			Game.CollisionRenderer.Stop ();
 
 
 		}
