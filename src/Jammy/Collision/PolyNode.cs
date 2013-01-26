@@ -2,32 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Jammy.Collision
 {
 	public class PolyNode
 	{
-		public PolyNode (Polygon poly, params PolyLink[] links)
+		public PolyNode (Polygon poly)
 		{
 			this.Poly = poly;
-			this.Links = links;
+		}
+
+		public void AddLink (PolyLink link)
+		{
+			link.Parent = this;
+			Links.Add (link);
 		}
 
 		public Polygon Poly;
-		public PolyLink[] Links;
+		public List<PolyLink> Links = new List<PolyLink>();
 	}
 
 	public class PolyLink
 	{
-		public PolyLink(int vertIndex, PolyNode parent, PolyLink target)
+		public PolyLink(int vertIndex)
 		{
 			this.VertexIndex = vertIndex;
-			this.Parent = parent;
-			this.Target = target;
 		}
 
 		public int VertexIndex;
 		public PolyNode Parent;
 		public PolyLink Target;
+
+		//TODO: remove these later
+		public int cost;
+		public int score;
+
+		public Vector2 GetVertex()
+		{
+			if (Parent == null)
+				throw new InvalidOperationException();
+
+			return Parent.Poly.Vertices[VertexIndex];
+		}
+
+		public static void AttachLinks (int indexA, int indexB,
+			ref PolyNode na, ref PolyNode nb)
+		{
+			var a = new PolyLink (indexA);
+			var b = new PolyLink (indexB);
+			a.Target = b;
+			b.Target = a;
+			na.AddLink (a);
+			nb.AddLink (b);
+		}
 	}
 }

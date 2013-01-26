@@ -53,7 +53,7 @@ namespace Jammy.Collision
 
 		public void Draw(Sprite sprite, Color? color = null)
 		{
-			DrawPolygon((Polygon) sprite.CollisionData, color.GetValueOrDefault());
+			DrawPolygon(sprite.CollisionData, color.GetValueOrDefault());
 		}
 
 		public void DrawRectangle(Rectangle rectangle, Color color)
