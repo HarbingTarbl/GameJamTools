@@ -65,10 +65,6 @@ namespace Jammy.Helpers
 			return new Rectangle(left, top, right - left, bottom - top);
 		}
 
-		public static Rectangle Scale(this Rectangle self, float amount)
-		{
-			
-		}
 
 		public static List<Rectangle> Subtract(this Rectangle self, Rectangle clipping)
 		{

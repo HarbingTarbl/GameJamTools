@@ -5,6 +5,7 @@ using System.Text;
 using Jammy;
 using Jammy.Collision;
 using Jammy.Helpers;
+using Jammy.Parallax;
 using Jammy.Sprites;
 using Jammy.StateManager;
 using Jammy.TileMap;
@@ -28,6 +29,9 @@ namespace SampleJammy
 		Map map;
 		Polygon[] mapSurfaces;
 		private CollisionRenderer t;
+		private ParallaxLayer layer;
+
+
 
 		public override void Load()
 		{
@@ -39,6 +43,16 @@ namespace SampleJammy
 
 			Rock = new Sprite();
 			Rock.Texture = Game.ContentLoader.Load<Texture2D> ("Rock");
+
+			layer = new ParallaxLayer();
+			layer.Bounds = new Rectangle(0, 0, 400, 400);
+			layer.Sprites.Add(new ParallaxSprite()
+			{
+				Color = Color.White,
+				DrawRectangle = new Rectangle(0, 0, 600, 100),
+				SourceRectangle = new Rectangle(0, 0, 250, 113),
+				Texture = Game.ContentLoader.Load<Texture2D>("rock")
+			});
 
 
 			mapSurfaces = new Polygon[map.Layers[0].Tiles.Length];
@@ -67,6 +81,8 @@ namespace SampleJammy
 				player.Location.Y += 5f;
 			}
 
+			layer.Update(gameTime);
+
 			player.Update (gameTime);	
 			camera.CenterOnPoint  (player.Location);
 		}
@@ -81,9 +97,11 @@ namespace SampleJammy
 				null,
 				camera.Transformation);
 
-			map.Draw (batch);
-			Rock.Draw (batch);
-			player.Draw (batch);
+			layer.Draw(batch, Matrix.Identity);
+
+			//map.Draw (batch);
+			//Rock.Draw (batch);
+			//player.Draw (batch);
 
 			batch.End();
 

@@ -27,8 +27,8 @@ namespace Jammy.Parallax
 
 				var clippedSource = new Rectangle((int)(xOff + sprite.SourceRectangle.Value.X),
 				                                  (int)(yOff + sprite.SourceRectangle.Value.Y),
-				                                  (int)((sprite.DrawRectangle.Right - clippedDraw.Right)*xOff),
-				                                  (int)((sprite.DrawRectangle.Bottom - clippedDraw.Bottom)*yOff));
+				                                  (int)(sprite.SourceRectangle.Value.Width - ((sprite.DrawRectangle.Right - clippedDraw.Right)*xOff)),
+				                                  (int)(sprite.SourceRectangle.Value.Height - ((sprite.DrawRectangle.Bottom - clippedDraw.Bottom)*yOff)));
 
 				clippedDraw.X += Bounds.X;
 				clippedDraw.Y += Bounds.Y;
@@ -58,9 +58,10 @@ namespace Jammy.Parallax
 		}
 
 
-		
 
+		public RenderTarget2D RenderTarget;
 		public List<ParallaxSprite> Sprites = new List<ParallaxSprite>();
+
 		public bool IsScrolling;
 		public bool IsRepeating;
 
