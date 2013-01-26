@@ -105,6 +105,7 @@
     <Compile Include="Collision\CollisionChecker.cs" />
     <Compile Include="Collision\CollisionRenderer.cs" />
     <Compile Include="Collision\Polygon.cs" />
+    <Compile Include="Collision\PolyNode.cs" />
     <Compile Include="Collision\Rectagon.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Helpers\GeomHelpers.cs" />

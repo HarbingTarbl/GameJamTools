@@ -57,7 +57,7 @@ namespace Jammy.Sprites
 	        if (!IsVisible) return;
 
             batch.Draw (Texture, Location, null, Color.White, Rotation,
-				Vector2.Zero, 1f, SpriteEffects.None, 0);
+				Origin, 1f, SpriteEffects.None, 0);
         }
 
 	    private float _scale;
