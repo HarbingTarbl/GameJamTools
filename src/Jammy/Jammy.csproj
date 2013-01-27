@@ -118,6 +118,7 @@
     <Compile Include="Size.cs" />
     <Compile Include="Parallax\ParallaxLayer.cs" />
     <Compile Include="Parallax\ParallaxManager.cs" />
+    <Compile Include="Sprites\AnimatedSprite.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="StateManager\BaseGameState.cs" />
     <Compile Include="StateManager\ColorTransition.cs" />
