@@ -12,5 +12,10 @@ namespace Jammy.Helpers
         {
             return currentState == ButtonState.Pressed && lastState == ButtonState.Released;
         }
+
+		public static bool WasButtonRelease(this ButtonState curreent, ButtonState old)
+		{
+			return curreent == ButtonState.Released && old == ButtonState.Pressed;
+		}
     }
 }
