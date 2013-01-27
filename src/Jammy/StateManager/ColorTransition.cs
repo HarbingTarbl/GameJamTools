@@ -33,6 +33,7 @@ namespace Jammy.StateManager
 
         public event EventHandler OnTransitionStart;
         public event EventHandler OnTransitionEnd;
+	    public Action Finished;
 
         public TimeSpan TimeRemaining
         {
@@ -70,7 +71,16 @@ namespace Jammy.StateManager
             running = false;
         }
 
-        public virtual void Update(GameTime gameTime)
+	    public void Reset()
+	    {
+		    displayColor = startColor;
+		    remainingDuration = totalDuration;
+			finished = false;
+			started = false;
+			running = false;
+	    }
+
+	    public virtual void Update(GameTime gameTime)
         {
             if (!started || !running || finished)
                 return;
@@ -88,6 +98,12 @@ namespace Jammy.StateManager
 
         public void TriggerStart()
         {
+			displayColor = startColor;
+			remainingDuration = totalDuration;
+			finished = false;
+			started = false;
+			running = false;
+
             if (!running)
             {
                 if (OnTransitionStart != null)
@@ -102,6 +118,9 @@ namespace Jammy.StateManager
         {
             if (running)
             {
+				if (Finished != null)
+					Finished ();
+
                 if (OnTransitionEnd != null)
                     OnTransitionEnd(this, null);
 
