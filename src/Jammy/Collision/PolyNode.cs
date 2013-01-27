@@ -25,32 +25,25 @@ namespace Jammy.Collision
 
 	public class PolyLink
 	{
-		public PolyLink(int vertIndex)
+		public PolyLink (float x, float y)
 		{
-			this.VertexIndex = vertIndex;
+			this.location = new Vector2 (x, y);
 		}
 
-		public int VertexIndex;
 		public PolyNode Parent;
 		public PolyLink Target;
-
-		//TODO: remove these later
-		public int cost;
-		public int score;
+		private Vector2 location;
 
 		public Vector2 GetVertex()
 		{
-			if (Parent == null)
-				throw new InvalidOperationException();
-
-			return Parent.Poly.Vertices[VertexIndex];
+			return location;
 		}
 
-		public static void AttachLinks (int indexA, int indexB,
+		public static void AttachLinks (float x, float y,
 			ref PolyNode na, ref PolyNode nb)
 		{
-			var a = new PolyLink (indexA);
-			var b = new PolyLink (indexB);
+			var a = new PolyLink (x, y);
+			var b = new PolyLink (x, y);
 			a.Target = b;
 			b.Target = a;
 			na.AddLink (a);
