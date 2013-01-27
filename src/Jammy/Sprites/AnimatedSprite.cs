@@ -21,14 +21,18 @@ namespace Jammy.Sprites
 		{
 			AnimationManager.Update(gameTime);
 			base.Update(gameTime);
+			_IHateRectangles.X = (int) Location.X;
+			_IHateRectangles.Y = (int) Location.Y;
 		}
 
 		public override void Draw(SpriteBatch batch)
 		{
-			batch.Draw(Texture, Location, AnimationManager.Bounding, Color.White);
+			batch.Draw(Texture, _IHateRectangles, AnimationManager.Bounding, Color.White, Rotation, Origin, SpriteEffects.None, 0f);
 		}
 
 		public AnimationManager AnimationManager;
+
+		protected Rectangle _IHateRectangles = new Rectangle(0, 0, 250, 500);
 
 	}
 
@@ -40,6 +44,8 @@ namespace Jammy.Sprites
 		public readonly TimeSpan FrameRate;
 		public readonly string Name;
 		public readonly Rectangle[] Sources;
+
+		public string NextAnim;
 		public int CurrentSource;
 
 		public Animation(string name, IEnumerable<Rectangle> sources, TimeSpan frameRate = default(TimeSpan), bool Looping = true)
@@ -96,7 +102,10 @@ namespace Jammy.Sprites
 		{
 			lastUpdate += gameTime.ElapsedGameTime;
 			if (lastUpdate < currentAnimation.FrameRate)
+			{
+
 				return;
+			}
 
 
 			if (currentAnimation.Looping)
@@ -105,6 +114,8 @@ namespace Jammy.Sprites
 			{
 				if (currentAnimation.CurrentSource < currentAnimation.Sources.Length - 1)
 					currentAnimation.CurrentSource++;
+				else if (currentAnimation.NextAnim != null)
+					SetAnimation(currentAnimation.NextAnim);
 			}
 			Bounding = currentAnimation.Sources[currentAnimation.CurrentSource];
 			lastUpdate = TimeSpan.Zero;
