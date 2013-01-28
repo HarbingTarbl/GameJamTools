@@ -105,7 +105,7 @@ namespace Jammy.Helpers
 			return list;
 		}
 
-        public static void CenterRectangle (Rectangle rect, Vector2 v)
+        public static void CenterRectangle (ref Rectangle rect, Vector2 v)
         {
             rect.Location = new Point (
                 (int) (v.X - (rect.Width/2)),

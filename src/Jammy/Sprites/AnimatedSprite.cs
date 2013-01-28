@@ -27,12 +27,15 @@ namespace Jammy.Sprites
 
 		public override void Draw(SpriteBatch batch)
 		{
+			if (!IsVisible)
+				return;
+
 			batch.Draw(Texture, _IHateRectangles, AnimationManager.Bounding, Color.White, Rotation, Origin, SpriteEffects.None, 0f);
 		}
 
 		public AnimationManager AnimationManager;
 
-		protected Rectangle _IHateRectangles = new Rectangle(0, 0, 250, 500);
+		public Rectangle _IHateRectangles = new Rectangle(0, 0, 250, 500);
 
 	}
 
@@ -103,10 +106,8 @@ namespace Jammy.Sprites
 			lastUpdate += gameTime.ElapsedGameTime;
 			if (lastUpdate < currentAnimation.FrameRate)
 			{
-
 				return;
 			}
-
 
 			if (currentAnimation.Looping)
 				currentAnimation.CurrentSource = ((currentAnimation.CurrentSource + 1) % currentAnimation.Sources.Length);
